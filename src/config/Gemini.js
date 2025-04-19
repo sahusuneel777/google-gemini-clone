@@ -14,6 +14,7 @@ const MODEL_NAME = "gemini-2.0-flash";
 const API_KEY = import.meta.env.VITE_API_GEMINI_KEY; // Gemini API key
 // console.log("first", import.meta.env.VITE_API_GEMINI_KEY)
 async function runChat(prompt) {
+  try{
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
@@ -52,8 +53,12 @@ async function runChat(prompt) {
 
   const result = await chat.sendMessage(prompt);
   const response = result.response;
-  console.log(response.text());
+  // console.log(response.text());
   return response.text();
+}catch (error) {
+  console.error("Error while running chat:", error);
+  // Handle error appropriately
+  alert("An error occurred while processing your request. This csan be due to Invalid key.");
 }
-
+}
  export default runChat;
